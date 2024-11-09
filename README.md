@@ -158,6 +158,129 @@ app.post('/upload', upload.array('files', 10), (req, res) => {
     res.json({ message: 'Files uploaded successfully!', files: req.files });
 });
 ```
+---
+---
+---
+# ApiResponse.js ka kam 
+
+
+```javascript
+// utility/ApiResponse.js
+
+class ApiResponse {
+    static success(res, data = null, message = 'Request was successful', statusCode = 200) {
+        return res.status(statusCode).json({
+            success: true,
+            message,
+            data,
+        });
+    }
+
+    static error(res, message = 'An error occurred', statusCode = 500, errors = null) {
+        return res.status(statusCode).json({
+            success: false,
+            message,
+            errors,
+        });
+    }
+
+    static notFound(res, message = 'Resource not found') {
+        return this.error(res, message, 404);
+    }
+
+    static validationError(res, errors) {
+        return this.error(res, 'Validation error', 400, errors);
+    }
+
+    static unauthorized(res, message = 'Unauthorized access') {
+        return this.error(res, message, 401);
+    }
+
+    static forbidden(res, message = 'Access forbidden') {
+        return this.error(res, message, 403);
+    }
+}
+
+module.exports = ApiResponse;
+
+
+```
+
+# Example
+## how to use 
+### bas import kar lena jaha jarurat hai jis file me kam ho 
+
+
+
+
+```javascript
+// routes/exampleRoute.js
+const express = require('express');
+const ApiResponse = require('../utility/ApiResponse'); // Importing ApiResponse utility
+const router = express.Router();
+
+// Example route
+router.get('/example', (req, res) => {
+    try {
+        const data = { id: 1, name: 'Example Item' };
+        return ApiResponse.success(res, data, 'Item retrieved successfully');
+    } catch (error) {
+        return ApiResponse.error(res, 'Failed to retrieve item', 500, error.message);
+    }
+});
+
+module.exports = router;
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 # Summary of Changeable Points for Multer Middleware
 
