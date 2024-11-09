@@ -157,6 +157,18 @@ module.exports = router;
 app.post('/upload', upload.array('files', 10), (req, res) => {
     res.json({ message: 'Files uploaded successfully!', files: req.files });
 });
+
+// For multiple files of the same field name
+router.post('/upload', upload.array('images', 5), (req, res) => {
+    // Handle multiple files here
+});
+
+// Or for different field names
+router.post('/upload', upload.fields([{ name: 'image1' }, { name: 'image2' }]), (req, res) => {
+    // Handle files here
+});
+
+
 ```
 ---
 ---
