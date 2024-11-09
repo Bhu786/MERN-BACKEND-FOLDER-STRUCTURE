@@ -151,6 +151,14 @@ router.post('/upload', upload.single('image'), (req, res) => {
 module.exports = router;
 ```
 
+
+```javascript
+// For multiple files
+app.post('/upload', upload.array('files', 10), (req, res) => {
+    res.json({ message: 'Files uploaded successfully!', files: req.files });
+});
+```
+
 # Summary of Changeable Points for Multer Middleware
 
 This document outlines the customizable points in the `multer.middleware.js` file for handling file uploads in an Express.js application.
